@@ -12,3 +12,6 @@ orig[['Book Name', 'Book Number', 'Chapter', 'Text']] = orig[['Book Name', 'Book
 df = orig.groupby(['Book Name', 'Book Number', 'Chapter'])['Text'].apply(' '.join).reset_index()
 
 print(len(df))
+
+num_words = pd.Series(' '.join(df['Text']).split()).value_counts()
+print(len(num_words)) # roughly 30K tokens
