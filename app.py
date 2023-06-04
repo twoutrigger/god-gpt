@@ -3,16 +3,14 @@ from chat import ask
 
 app = Flask(__name__)
 
-
 @app.get("/")
 def index_get():
     return render_template("base.html")
 
-
 @app.post("/predict")
 def predict():
     text = request.get_json().get("message")
-    response = ask(text)
+    response = ask(query=text)
     message = {"answer": response}
     return jsonify(message)
 

@@ -11,8 +11,8 @@ orig[['Book Name', 'Book Number', 'Chapter', 'Text']] = orig[['Book Name', 'Book
 
 # Aggregating biblical text to the chapter level
 df = orig.groupby(['Book Name', 'Book Number', 'Chapter'])['Text'].apply(' '.join).reset_index()
-
 df = df[['Text']]
+df.rename(columns={"Text": "text"}, inplace=True)
 
 # estimating the number of tokens before generating embedding; roughly 30K tokens
 # num_words = pd.Series(' '.join(df['Text']).split()).value_counts()
@@ -23,5 +23,5 @@ def get_embedding(text, model="text-embedding-ada-002"):
    return openai.Embedding.create(input = [text], model=model)['data'][0]['embedding']
 
 # generate text embedding
-# df['ada_embedding'] = df.Text.apply(lambda x: get_embedding(x, model='text-embedding-ada-002'))
+# df['embedding'] = df.Text.apply(lambda x: get_embedding(x, model='text-embedding-ada-002'))
 # df.to_csv('text_embedding.csv', index=False)
